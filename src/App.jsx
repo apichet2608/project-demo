@@ -38,6 +38,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Welcome />} />
               <Route path="/Page1" element={<Welcome />} />
+              <Route path="/Page2" element={<Welcome />} />
 
               {/* <Route path="/MasterVerifyReport" element={<MasterVerify />} />
             <Route path="/VerifyReport" element={<Verify />} /> */}

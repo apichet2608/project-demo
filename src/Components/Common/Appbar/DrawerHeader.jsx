@@ -63,12 +63,17 @@ export default function MiniDrawer({ opens, onClicks }) {
   const anchor = "left";
   const [buttonClicks, setButtonClicks] = React.useState({
     Page1: false,
+    Page2: false,
   });
 
   const handleButtonClick = (text) => {
     if (text === "Page1")
       setButtonClicks({
         Page1: true,
+      });
+    if (text === "Page2")
+      setButtonClicks({
+        Page2: true,
       });
   };
 
@@ -156,7 +161,10 @@ export default function MiniDrawer({ opens, onClicks }) {
           </ListItem>
         ) : null}
         <List>
-          {[{ text: "Page1", path: "/Page1" }].map((item, index) => (
+          {[
+            { text: "Page1", path: "/Page1" },
+            { text: "Page2", path: "/Page2" },
+          ].map((item, index) => (
             <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
               <NavLink to={item.path} style={{ textDecoration: "none" }}>
                 <ListItemButton
