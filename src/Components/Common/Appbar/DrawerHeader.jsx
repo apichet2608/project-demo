@@ -26,7 +26,6 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
-  borderRight: "1px dashed #ccc",
 });
 
 const closedMixin = (theme) => ({
@@ -39,9 +38,7 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
-  borderRight: "1px dashed #ccc",
 });
-
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -64,6 +61,8 @@ export default function MiniDrawer({ opens, onClicks }) {
   const [buttonClicks, setButtonClicks] = React.useState({
     Page1: false,
     Page2: false,
+    Page3: false,
+    Page4: false,
   });
 
   const handleButtonClick = (text) => {
@@ -75,17 +74,15 @@ export default function MiniDrawer({ opens, onClicks }) {
       setButtonClicks({
         Page2: true,
       });
+    if (text === "Page3")
+      setButtonClicks({
+        Page3: true,
+      });
+    if (text === "Page4")
+      setButtonClicks({
+        Page4: true,
+      });
   };
-
-  // รีเซ็ตสีปุ่มเมื่อปิดเมนู
-  // React.useEffect(() => {
-  //   if (!opens) {
-  //     setButtonClicks({
-  //       "Verify Report": false,
-  //       "Master Verify Report": false,
-  //     });
-  //   }
-  // }, [opens]);
 
   return (
     <>
@@ -95,9 +92,7 @@ export default function MiniDrawer({ opens, onClicks }) {
         sx={{
           "& .MuiDrawer-paper": {
             backgroundColor: "#eeeeee", // สีพื้นหลังที่คุณต้องการ
-            // clipPath: "polygon(0% 0%, 0% 100%, 25% 100%, 25% 25%, 75% 25%, 75% 75%, 25% 75%, 25% 100%, 100% 100%, 100% 0%)",
           },
-          // width: 300, // กำหนดความกว้างของ Drawer
         }}
       >
         <Box
@@ -124,7 +119,6 @@ export default function MiniDrawer({ opens, onClicks }) {
                       alignItems: "center",
                       justifyContent: "center",
                       objectFit: "contain",
-                      // padding: 0.5,
                     }
                   : {
                       height: "64px",
@@ -154,7 +148,7 @@ export default function MiniDrawer({ opens, onClicks }) {
                     fontSize: "16px",
                   }}
                 >
-                  Report
+                  Group1
                 </Typography>
               }
             />
@@ -210,13 +204,9 @@ export default function MiniDrawer({ opens, onClicks }) {
                           color: "#616161",
                           fontFamily: "Arial, sans-serif",
                           fontSize: "16px",
-                          // fontSize: 15,
-                          // fontWeight: "medium",
+
                           lineHeight: "20px",
                           mb: "2px",
-                          // textOverflow: "ellipsis",
-                          // whiteSpace: "nowrap",
-                          // overflow: "hidden",
                         }}
                       >
                         {item.text}
@@ -229,6 +219,91 @@ export default function MiniDrawer({ opens, onClicks }) {
           ))}
         </List>
         <Divider />
+        {opens ? (
+          <ListItem disablePadding sx={{ display: "block", mt: 1, pl: 1 }}>
+            <ListItemText
+              primary={
+                <Typography
+                  component="div"
+                  variant="subtitle2"
+                  fontWeight="bold"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    color: "#616161",
+                    fontFamily: "Arial, sans-serif",
+                    fontSize: "16px",
+                  }}
+                >
+                  Group2
+                </Typography>
+              }
+            />
+          </ListItem>
+        ) : null}
+        <List>
+          {[
+            { text: "Page3", path: "/Page3" },
+            { text: "Page4", path: "/Page4" },
+          ].map((item, index) => (
+            <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
+              <NavLink to={item.path} style={{ textDecoration: "none" }}>
+                <ListItemButton
+                  sx={{
+                    maxHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                    backgroundColor: buttonClicks[item.text]
+                      ? "rgba(202, 237, 255, 0.8)"
+                      : "transparent",
+                  }}
+                  onClick={() => handleButtonClick(item.text)}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {item.text === "Verify Report" ? (
+                      <>
+                        <img
+                          style={{ width: "24px", height: "24px" }}
+                          src={Fujilogo2}
+                        />
+                      </>
+                    ) : (
+                      <img
+                        style={{ width: "24px", height: "24px" }}
+                        src={Fujilogo2}
+                      />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        component="div"
+                        variant="subtitle2"
+                        fontWeight="bold"
+                        sx={{
+                          opacity: open ? 1 : 0,
+                          color: "#616161",
+                          fontFamily: "Arial, sans-serif",
+                          fontSize: "16px",
+
+                          lineHeight: "20px",
+                          mb: "2px",
+                        }}
+                      >
+                        {item.text}
+                      </Typography>
+                    }
+                  />
+                </ListItemButton>
+              </NavLink>
+            </ListItem>
+          ))}
+        </List>
       </Drawer>
     </>
   );

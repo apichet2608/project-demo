@@ -1,10 +1,11 @@
 import * as React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Welcome from "./Page-Welcome/Welcome-Page";
-import LoadingPage from "./LoadingPage";
+import Welcome from "./Pages/Page-Welcome/Welcome-Page";
+import LoadingPage from "./Pages/Page-LoadingPage/LoadingPage";
 import Appbar from "./Components/Common/Appbar/Appbar";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
+import Login from "./Pages/Page-Login/login";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -31,18 +32,17 @@ function App() {
         <LoadingPage />
       ) : (
         <>
-          <Box sx={{ display: "flex", bgcolor: "red" }}>
+          <Box sx={{ display: "flex" }}>
             <DrawerHeader />
-            <Appbar />
+            {/* Check if the current path is "/login" */}
+            {window.location.pathname !== "/login" && <Appbar />}
             {/* <Box component="main" sx={{ flexGrow: 1, p: 3, bgcolor: "red" }}> */}
             <Routes>
+              <Route path="/login" element={<Login />} />
+
               <Route path="/" element={<Welcome />} />
               <Route path="/Page1" element={<Welcome />} />
               <Route path="/Page2" element={<Welcome />} />
-
-              {/* <Route path="/MasterVerifyReport" element={<MasterVerify />} />
-            <Route path="/VerifyReport" element={<Verify />} /> */}
-              {/* Add other routes as needed */}
             </Routes>
             {/* </Box> */}
           </Box>
